@@ -32,4 +32,13 @@ public class Plato {
     private List<Insumo> insumos=new ArrayList<>();
 
 
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "platos")
+    private List<Orden> ordenes=new ArrayList<>();
+
+
 }

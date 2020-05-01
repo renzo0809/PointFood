@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -26,7 +28,15 @@ public class Orden {
     @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
-
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name="ordenes_platos",
+            joinColumns = {@JoinColumn(name="orden_id")},
+            inverseJoinColumns = {@JoinColumn(name="plato_id")})
+    private List<Plato> platos=new ArrayList<>();
 
 
 }
