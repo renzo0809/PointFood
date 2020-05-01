@@ -1,0 +1,32 @@
+package com.example.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
+
+
+@Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="ordenes")
+public class Orden {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
+
+    private Date registrationTime;
+    private Date orderTime;
+    private double price;
+
+    @JoinColumn(name="cliente_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cliente cliente;
+
+
+
+
+}
