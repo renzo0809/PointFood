@@ -19,7 +19,7 @@ public class Plato {
     private Long id;
     private String name;
     private String description;
-
+    private double price;
 
     @ManyToMany(fetch=FetchType.LAZY,
                 cascade = {
@@ -31,7 +31,6 @@ public class Plato {
                 inverseJoinColumns = {@JoinColumn(name="insumo_id")})
     private List<Insumo> insumos=new ArrayList<>();
 
-
     @ManyToMany(fetch=FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -39,6 +38,5 @@ public class Plato {
             },
             mappedBy = "platos")
     private List<Orden> ordenes=new ArrayList<>();
-
 
 }

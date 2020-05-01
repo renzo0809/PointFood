@@ -22,7 +22,7 @@ public class Insumo {
     @NotEmpty(message="El nombre no debe estar vacio")
     private String name;
     private Long quantity;
-
+    private double price;
     @ManyToMany(fetch=FetchType.LAZY,
                 cascade = {
                         CascadeType.PERSIST,
