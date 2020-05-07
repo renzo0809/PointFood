@@ -1,7 +1,7 @@
 package com.example.service.Impl;
 
-import com.example.entity.Insumo;
-import com.example.repository.InsumoRepository;
+import com.example.model.Extra;
+import com.example.repository.ExtraRepository;
 import com.example.service.InsumoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,39 +12,39 @@ import java.util.Optional;
 @Service
 public class InsumoServiceImpl implements InsumoService {
     @Autowired
-    InsumoRepository InsumoRepository;
+    ExtraRepository ExtraRepository;
 
     @Override
-    public List<Insumo> listAllInsumos() {
-        return InsumoRepository.findAll();
+    public List<Extra> listAllInsumos() {
+        return ExtraRepository.findAll();
     }
 
     @Override
-    public Insumo getInsumo(Long id) {
-        return InsumoRepository.findById(id).orElse(null);
+    public Extra getInsumo(Long id) {
+        return ExtraRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Insumo createInsumo(Insumo Insumo) {
-        return InsumoRepository.save(Insumo);
+    public Extra createInsumo(Extra Extra) {
+        return ExtraRepository.save(Extra);
     }
 
     @Override
-    public Insumo updateInsumo(Insumo Insumo) {
-        Optional<Insumo> InsumoDB=InsumoRepository.findById(Insumo.getId());
+    public Extra updateInsumo(Extra Extra) {
+        Optional<Extra> InsumoDB= ExtraRepository.findById(Extra.getId());
         if(!InsumoDB.isPresent()){
             return null;
         }
-        InsumoDB.get().setId(Insumo.getId());
-        InsumoDB.get().setName(Insumo.getName());
-        InsumoDB.get().setPrice(Insumo.getPrice());
-        InsumoDB.get().setQuantity(Insumo.getQuantity());
-        InsumoDB.get().setPlatos(Insumo.getPlatos());
-        return InsumoRepository.save(InsumoDB.get());
+        InsumoDB.get().setId(Extra.getId());
+        InsumoDB.get().setName(Extra.getName());
+        InsumoDB.get().setPrice(Extra.getPrice());
+        InsumoDB.get().setQuantity(Extra.getQuantity());
+        InsumoDB.get().setPlatos(Extra.getPlatos());
+        return ExtraRepository.save(InsumoDB.get());
     }
 
     @Override
     public void deleteInsumo(Long id) {
-        InsumoRepository.deleteById(id);
+        ExtraRepository.deleteById(id);
     }
 }

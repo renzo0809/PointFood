@@ -1,7 +1,7 @@
 package com.example.controller;
 
 
-import com.example.entity.Orden;
+import com.example.model.Order;
 import com.example.service.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,9 +20,9 @@ public class OrdenController {
     private OrdenService ordenService;
 
     @GetMapping
-    public ResponseEntity<List<Orden>> listOrden()
+    public ResponseEntity<List<Order>> listOrden()
     {
-        List<Orden> ordenes=ordenService.listAllOrden();
+        List<Order> ordenes=ordenService.listAllOrden();
         if(ordenes.isEmpty())
         {
             return ResponseEntity.noContent().build();
@@ -34,51 +33,51 @@ public class OrdenController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Orden> getOrden(@PathVariable("id") Long id)
+    public ResponseEntity<Order> getOrden(@PathVariable("id") Long id)
     {
-        Orden orden=ordenService.getOrden(id);
-        if(orden==null)
+        Order order =ordenService.getOrden(id);
+        if(order ==null)
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(orden);
+        return ResponseEntity.ok(order);
     }
 
     @PostMapping
-    public ResponseEntity<Orden> createOrden(@Valid @RequestBody Orden orden,
+    public ResponseEntity<Order> createOrden(@Valid @RequestBody Order order,
                                              BindingResult result)
     {
         if(result.hasErrors())
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Orden ordenCreate=ordenService.createOrden(orden);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ordenCreate);
+        Order orderCreate =ordenService.createOrden(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderCreate);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Orden> updateOrden(@PathVariable Long id,
-                                             @RequestBody Orden orden)
+    public ResponseEntity<Order> updateOrden(@PathVariable Long id,
+                                             @RequestBody Order order)
     {
-        orden.setId(id);
-        Orden ordenDB= ordenService.updateOrden(orden);
-        if(ordenDB==null)
+        order.setId(id);
+        Order orderDB = ordenService.updateOrden(order);
+        if(orderDB ==null)
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ordenDB);
+        return ResponseEntity.ok(orderDB);
     }
 
     @DeleteMapping
-    public ResponseEntity<Orden> deleteOrden(@PathVariable Long id)
+    public ResponseEntity<Order> deleteOrden(@PathVariable Long id)
     {
-        Orden ordenDB=ordenService.getOrden(id);
-        if(ordenDB==null)
+        Order orderDB =ordenService.getOrden(id);
+        if(orderDB ==null)
         {
             return ResponseEntity.notFound().build();
         }
         ordenService.deleteOrden(id);
-        return ResponseEntity.ok(ordenDB);
+        return ResponseEntity.ok(orderDB);
 
     }
 

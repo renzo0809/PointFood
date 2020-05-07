@@ -1,8 +1,5 @@
 package com.example.service.Impl;
 
-import com.example.entity.Mesa;
-import com.example.repository.MesaRepository;
-import com.example.service.MesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,29 +12,29 @@ public class MesaServiceImpl implements MesaService {
     MesaRepository MesaRepository;
 
     @Override
-    public List<Mesa> listAllMesas() {
+    public List<Table> listAllMesas() {
         return MesaRepository.findAll();
     }
 
     @Override
-    public Mesa getMesa(Long id) {
+    public Table getMesa(Long id) {
         return MesaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Mesa createMesa(Mesa Mesa) {
-        return MesaRepository.save(Mesa);
+    public Table createMesa(Table Table) {
+        return MesaRepository.save(Table);
     }
 
     @Override
-    public Mesa updateMesa(Mesa Mesa) {
-        Optional<Mesa> MesaDB=MesaRepository.findById(Mesa.getId());
+    public Table updateMesa(Table Table) {
+        Optional<Table> MesaDB=MesaRepository.findById(Table.getId());
         if(!MesaDB.isPresent()){
             return null;
         }
-        MesaDB.get().setId(Mesa.getId());
-        MesaDB.get().setNumber(Mesa.getNumber());
-        MesaDB.get().setId(Mesa.getId());
+        MesaDB.get().setId(Table.getId());
+        MesaDB.get().setNumber(Table.getNumber());
+        MesaDB.get().setId(Table.getId());
         return MesaRepository.save(MesaDB.get());
     }
 

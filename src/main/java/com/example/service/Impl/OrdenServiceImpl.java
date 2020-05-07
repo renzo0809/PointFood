@@ -1,7 +1,7 @@
 package com.example.service.Impl;
 
-import com.example.entity.Orden;
-import com.example.repository.OrdenRepository;
+import com.example.model.Order;
+import com.example.repository.OrderRepository;
 import com.example.service.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,46 +14,46 @@ import java.util.List;
 public class OrdenServiceImpl implements OrdenService {
 
     @Autowired
-    OrdenRepository ordenRepository;
+    OrderRepository orderRepository;
 
     @Override
-    public List<Orden> listAllOrden() {
-        return ordenRepository.findAll();
+    public List<Order> listAllOrden() {
+        return orderRepository.findAll();
     }
 
     @Override
-    public Orden getOrden(Long id) {
-        return ordenRepository.findById(id).orElse(null);
+    public Order getOrden(Long id) {
+        return orderRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Orden createOrden(Orden orden) {
-        orden.setRegistrationTime(new Date());
-        return ordenRepository.save(orden);
+    public Order createOrden(Order order) {
+        order.setRegistrationTime(new Date());
+        return orderRepository.save(order);
     }
 
     @Override
-    public Orden updateOrden(Orden orden) {
-       Orden ordenDB= this.getOrden(orden.getId());
-       if(ordenDB==null)
+    public Order updateOrden(Order order) {
+       Order orderDB = this.getOrden(order.getId());
+       if(orderDB ==null)
        {
             return null;
        }
-       ordenDB.setOrderTime(orden.getOrderTime());
-       ordenDB.setPlatos(orden.getPlatos());
+       orderDB.setOrderTime(order.getOrderTime());
+       orderDB.setPlatos(order.getPlatos());
        double price= 0.0;
-        for (int i = 0; i < orden.getPlatos().size(); i++) {
-            for (int j = 0; j < orden.getPlatos().get(i).getInsumos().size(); j++) {
-                price=price+orden.getPlatos().get(i).getInsumos().get(j).getPrice();
+        for (int i = 0; i < order.getPlatos().size(); i++) {
+            for (int j = 0; j < order.getPlatos().get(i).getInsumos().size(); j++) {
+                price=price+ order.getPlatos().get(i).getInsumos().get(j).getPrice();
             }
-            price=price+orden.getPlatos().get(i).getPrice();
+            price=price+ order.getPlatos().get(i).getPrice();
         }
-        ordenDB.setPrice(price);
-        return ordenRepository.save(ordenDB);
+        orderDB.setPrice(price);
+        return orderRepository.save(orderDB);
     }
 
     @Override
     public void deleteOrden(Long id) {
-        ordenRepository.deleteById(id);
+        orderRepository.deleteById(id);
     }
 }

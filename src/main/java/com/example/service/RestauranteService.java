@@ -1,14 +1,14 @@
 package com.example.service;
 
-import com.example.entity.Restaurante;
+import com.example.model.Restaurant;
 
 import java.util.List;
 
 public interface RestauranteService {
-    List<Restaurante> listAllRestaurantes();
+    List<Restaurant> listAllRestaurantes();
 
-    Restaurante getRestaurante(Long id);
-    Restaurante createRestaurante(Restaurante Restaurante);
-    Restaurante updateRestaurante(Restaurante Restaurante);
+    Restaurant getRestaurante(Long id);
+    Restaurant createRestaurante(Restaurant Restaurant);
+    Restaurant updateRestaurante(Restaurant Restaurant);
     void deleteRestaurante(Long id);
 }

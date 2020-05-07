@@ -1,14 +1,14 @@
 package com.example.service;
 
-import com.example.entity.Tarjeta;
+import com.example.model.Card;
 
 import java.util.List;
 
 public interface TarjetaService {
-    List<Tarjeta> listAllTarjetas();
+    List<Card> listAllTarjetas();
 
-    Tarjeta getTarjeta(Long id);
-    Tarjeta createTarjeta(Tarjeta Tarjeta);
-    Tarjeta updateTarjeta(Tarjeta Tarjeta);
+    Card getTarjeta(Long id);
+    Card createTarjeta(Card Card);
+    Card updateTarjeta(Card Card);
     void deleteTarjeta(Long id);
 }

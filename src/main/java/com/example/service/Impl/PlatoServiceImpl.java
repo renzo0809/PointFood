@@ -1,7 +1,7 @@
 package com.example.service.Impl;
 
-import com.example.entity.Plato;
-import com.example.repository.PlatoRepository;
+import com.example.model.Dish;
+import com.example.repository.DishRepository;
 import com.example.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,40 +12,40 @@ import java.util.Optional;
 @Service
 public class PlatoServiceImpl implements PlatoService {
     @Autowired
-    PlatoRepository PlatoRepository;
+    DishRepository DishRepository;
 
     @Override
-    public List<Plato> listAllPlatos() {
-        return PlatoRepository.findAll();
+    public List<Dish> listAllPlatos() {
+        return DishRepository.findAll();
     }
 
     @Override
-    public Plato getPlato(Long id) {
-        return PlatoRepository.findById(id).orElse(null);
+    public Dish getPlato(Long id) {
+        return DishRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Plato createPlato(Plato Plato) {
-        return PlatoRepository.save(Plato);
+    public Dish createPlato(Dish Dish) {
+        return DishRepository.save(Dish);
     }
 
     @Override
-    public Plato updatePlato(Plato Plato) {
-        Optional<Plato> PlatoDB=PlatoRepository.findById(Plato.getId());
+    public Dish updatePlato(Dish Dish) {
+        Optional<Dish> PlatoDB= DishRepository.findById(Dish.getId());
         if(!PlatoDB.isPresent()){
             return null;
         }
-        PlatoDB.get().setId(Plato.getId());
-        PlatoDB.get().setDescription(Plato.getDescription());
-        PlatoDB.get().setInsumos(Plato.getInsumos());
-        PlatoDB.get().setName(Plato.getName());
-        PlatoDB.get().setOrdenes(Plato.getOrdenes());
-        PlatoDB.get().setPrice(Plato.getPrice());
-        return PlatoRepository.save(PlatoDB.get());
+        PlatoDB.get().setId(Dish.getId());
+        PlatoDB.get().setDescription(Dish.getDescription());
+        PlatoDB.get().setInsumos(Dish.getInsumos());
+        PlatoDB.get().setName(Dish.getName());
+        PlatoDB.get().setOrdenes(Dish.getOrdenes());
+        PlatoDB.get().setPrice(Dish.getPrice());
+        return DishRepository.save(PlatoDB.get());
     }
 
     @Override
     public void deletePlato(Long id) {
-        PlatoRepository.deleteById(id);
+        DishRepository.deleteById(id);
     }
 }

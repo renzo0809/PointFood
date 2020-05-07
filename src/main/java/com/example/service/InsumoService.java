@@ -1,14 +1,14 @@
 package com.example.service;
 
-import com.example.entity.Insumo;
+import com.example.model.Extra;
 
 import java.util.List;
 
 public interface InsumoService {
-    List<Insumo> listAllInsumos();
+    List<Extra> listAllInsumos();
 
-    Insumo getInsumo(Long id);
-    Insumo createInsumo(Insumo Insumo);
-    Insumo updateInsumo(Insumo Insumo);
+    Extra getInsumo(Long id);
+    Extra createInsumo(Extra Extra);
+    Extra updateInsumo(Extra Extra);
     void deleteInsumo(Long id);
 }

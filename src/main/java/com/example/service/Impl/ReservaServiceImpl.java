@@ -1,8 +1,5 @@
 package com.example.service.Impl;
 
-import com.example.entity.Reserva;
-import com.example.repository.ReservaRepository;
-import com.example.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,31 +12,31 @@ public class ReservaServiceImpl implements ReservaService {
     ReservaRepository ReservaRepository;
 
     @Override
-    public List<Reserva> listAllReservas() {
+    public List<Reservation> listAllReservas() {
         return ReservaRepository.findAll();
     }
 
     @Override
-    public Reserva getReserva(Long id) {
+    public Reservation getReserva(Long id) {
         return ReservaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Reserva createReserva(Reserva Reserva) {
-        return ReservaRepository.save(Reserva);
+    public Reservation createReserva(Reservation Reservation) {
+        return ReservaRepository.save(Reservation);
     }
 
     @Override
-    public Reserva updateReserva(Reserva Reserva) {
-        Optional<Reserva> ReservaDB=ReservaRepository.findById(Reserva.getId());
+    public Reservation updateReserva(Reservation Reservation) {
+        Optional<Reservation> ReservaDB=ReservaRepository.findById(Reservation.getId());
         if(!ReservaDB.isPresent()){
             return null;
         }
-        ReservaDB.get().setId(Reserva.getId());
-        ReservaDB.get().setMesa(Reserva.getMesa());
-        ReservaDB.get().setNumber(Reserva.getNumber());
-        ReservaDB.get().setOrden(Reserva.getOrden());
-        ReservaDB.get().setState(Reserva.getState());
+        ReservaDB.get().setId(Reservation.getId());
+        ReservaDB.get().setMesa(Reservation.getMesa());
+        ReservaDB.get().setNumber(Reservation.getNumber());
+        ReservaDB.get().setOrden(Reservation.getOrden());
+        ReservaDB.get().setState(Reservation.getState());
         return ReservaRepository.save(ReservaDB.get());
     }
 

@@ -1,15 +1,15 @@
 package com.example.service;
 
-import com.example.entity.Cliente;
+import com.example.model.Client;
 
 import java.util.List;
 
 public interface ClienteService {
 
-    List<Cliente> listAllClientes();
+    List<Client> listAllClientes();
 
-    Cliente getCliente(Long id);
-    Cliente createCliente(Cliente cliente);
-    Cliente updateCliente(Cliente cliente);
+    Client getCliente(Long id);
+    Client createCliente(Client client);
+    Client updateCliente(Client client);
     void deleteCliente(Long id);
 }

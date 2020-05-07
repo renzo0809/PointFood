@@ -1,7 +1,7 @@
 package com.example.service.Impl;
 
-import com.example.entity.Dueño;
-import com.example.repository.DueñoRepository;
+import com.example.model.RestaurantOwner;
+import com.example.repository.RestaurantOwnerRepository;
 import com.example.service.DueñoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,41 +10,41 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DueñoServiceImpl implements DueñoService {
+public class RestaurantOwnerServiceImpl implements DueñoService {
 
     @Autowired
-    DueñoRepository dueñoRepository;
+    RestaurantOwnerRepository restaurantOwnerRepository;
 
     @Override
-    public List<Dueño> listAllDueños() {
-        return dueñoRepository.findAll();
+    public List<RestaurantOwner> listAllDueños() {
+        return restaurantOwnerRepository.findAll();
     }
 
     @Override
-    public Dueño getDueño(Long id) {
-        return dueñoRepository.findById(id).orElse(null);
+    public RestaurantOwner getDueño(Long id) {
+        return restaurantOwnerRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Dueño createDueño(Dueño Dueño) {
-        return dueñoRepository.save(Dueño);
+    public RestaurantOwner createDueño(RestaurantOwner RestaurantOwner) {
+        return restaurantOwnerRepository.save(RestaurantOwner);
     }
 
     @Override
-    public Dueño updateDueño(Dueño Dueño) {
-        Optional<Dueño> dueñoDB=dueñoRepository.findById(Dueño.getId());
+    public RestaurantOwner updateDueño(RestaurantOwner RestaurantOwner) {
+        Optional<RestaurantOwner> dueñoDB= restaurantOwnerRepository.findById(RestaurantOwner.getId());
         if(!dueñoDB.isPresent()){
             return null;
         }
-        dueñoDB.get().setId(Dueño.getId());
-        dueñoDB.get().setDni(Dueño.getDni());
-        dueñoDB.get().setEmail(Dueño.getEmail());
-        dueñoDB.get().setName(Dueño.getName());
-        return dueñoRepository.save(dueñoDB.get());
+        dueñoDB.get().setId(RestaurantOwner.getId());
+        dueñoDB.get().setDni(RestaurantOwner.getDni());
+        dueñoDB.get().setEmail(RestaurantOwner.getEmail());
+        dueñoDB.get().setName(RestaurantOwner.getName());
+        return restaurantOwnerRepository.save(dueñoDB.get());
     }
 
     @Override
     public void deleteDueño(Long id) {
-        dueñoRepository.deleteById(id);
+        restaurantOwnerRepository.deleteById(id);
     }
 }

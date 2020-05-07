@@ -1,16 +1,16 @@
 package com.example.service;
 
-import com.example.entity.Orden;
+import com.example.model.Order;
 
 import java.util.List;
 
 public interface OrdenService {
 
-    List<Orden> listAllOrden();
+    List<Order> listAllOrden();
 
-    Orden getOrden(Long id);
-    Orden createOrden(Orden orden);
-    Orden updateOrden(Orden orden);
+    Order getOrden(Long id);
+    Order createOrden(Order order);
+    Order updateOrden(Order order);
     void deleteOrden(Long id);
 
 }

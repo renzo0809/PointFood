@@ -1,14 +1,14 @@
 package com.example.service;
 
-import com.example.entity.Dueño;
+import com.example.model.RestaurantOwner;
 
 import java.util.List;
 
 public interface DueñoService {
-    List<Dueño> listAllDueños();
+    List<RestaurantOwner> listAllDueños();
 
-    Dueño getDueño(Long id);
-    Dueño createDueño(Dueño Dueño);
-    Dueño updateDueño(Dueño Dueño);
+    RestaurantOwner getDueño(Long id);
+    RestaurantOwner createDueño(RestaurantOwner RestaurantOwner);
+    RestaurantOwner updateDueño(RestaurantOwner RestaurantOwner);
     void deleteDueño(Long id);
 }
