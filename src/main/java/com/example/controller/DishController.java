@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/invoices")
+@RequestMapping("/dishes")
 public class DishController {
 
     @Autowired
