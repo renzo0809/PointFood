@@ -2,7 +2,7 @@ package com.example.service.Impl;
 
 import com.example.model.Order;
 import com.example.repository.OrderRepository;
-import com.example.service.OrdenService;
+import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Service
-public class OrdenServiceImpl implements OrdenService {
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepository orderRepository;

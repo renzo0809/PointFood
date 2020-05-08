@@ -2,7 +2,7 @@ package com.example.controller;
 
 
 import com.example.model.Order;
-import com.example.service.OrdenService;
+import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ import java.util.List;
 @RequestMapping("/ordenes")
 public class OrdenController {
     @Autowired
-    private OrdenService ordenService;
+    private OrderService orderService;
 
     @GetMapping
     public ResponseEntity<List<Order>> listOrden()
     {
-        List<Order> ordenes=ordenService.listAllOrden();
+        List<Order> ordenes= orderService.listAllOrden();
         if(ordenes.isEmpty())
         {
             return ResponseEntity.noContent().build();
@@ -35,7 +35,7 @@ public class OrdenController {
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrden(@PathVariable("id") Long id)
     {
-        Order order =ordenService.getOrden(id);
+        Order order = orderService.getOrden(id);
         if(order ==null)
         {
             return ResponseEntity.notFound().build();
@@ -51,7 +51,7 @@ public class OrdenController {
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Order orderCreate =ordenService.createOrden(order);
+        Order orderCreate = orderService.createOrden(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderCreate);
     }
 
@@ -60,7 +60,7 @@ public class OrdenController {
                                              @RequestBody Order order)
     {
         order.setId(id);
-        Order orderDB = ordenService.updateOrden(order);
+        Order orderDB = orderService.updateOrden(order);
         if(orderDB ==null)
         {
             return ResponseEntity.notFound().build();
@@ -71,12 +71,12 @@ public class OrdenController {
     @DeleteMapping
     public ResponseEntity<Order> deleteOrden(@PathVariable Long id)
     {
-        Order orderDB =ordenService.getOrden(id);
+        Order orderDB = orderService.getOrden(id);
         if(orderDB ==null)
         {
             return ResponseEntity.notFound().build();
         }
-        ordenService.deleteOrden(id);
+        orderService.deleteOrden(id);
         return ResponseEntity.ok(orderDB);
 
     }

@@ -1,13 +1,19 @@
 package com.example.repository;
 
 import com.example.model.Card;
+import com.example.model.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
 
+    @Query("SELECT ca FROM Card ca WHERE ca.id=?1")
+    Card findCardById(Long id);
+
     @Query("SELECT ca FROM Card ca JOIN FETCH ca.client cl WHERE cl.id=?1")
-    Card findCardByClientId(Long id);
+    List<Card> findCardByClient(Long id);
 }

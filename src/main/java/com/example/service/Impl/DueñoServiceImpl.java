@@ -2,7 +2,7 @@ package com.example.service.Impl;
 
 import com.example.model.RestaurantOwner;
 import com.example.repository.RestaurantOwnerRepository;
-import com.example.service.DueñoService;
+import com.example.service.RestaurantOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RestaurantOwnerServiceImpl implements DueñoService {
+public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
 
     @Autowired
     RestaurantOwnerRepository restaurantOwnerRepository;

@@ -2,7 +2,7 @@ package com.example.service.Impl;
 
 import com.example.model.Card;
 import com.example.repository.CardRepository;
-import com.example.service.TarjetaService;
+import com.example.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TarjetaServiceImpl implements TarjetaService {
+public class CardServiceImpl implements CardService {
     @Autowired
     CardRepository CardRepository;
 
