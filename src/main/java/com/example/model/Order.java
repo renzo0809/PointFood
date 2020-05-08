@@ -18,10 +18,10 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @JsonIgnoreProperties(value = {"registered_at"}, allowGetters = true)
+@Builder
 @Table(name="orders")
-public class Order extends OrderDetail{
+public class Order {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -33,18 +33,18 @@ public class Order extends OrderDetail{
 
     @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE }, fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    //@JoinColumn(name = "order_id", nullable = false)
     private List<OrderDetail> dishes;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     @Column(name = "registered_at", nullable = false)
-    private LocalDateTime registeredAt;
+    private Date registeredAt;
 
     @NotNull(message = "La fecha de entrega no puede ser vacío")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "delivered_at", nullable = false)
-    private LocalDateTime deliveredAt;
+    private Date deliveredAt;
 
     @JoinColumn(name="restaurant_id", nullable = false)
     @ManyToOne(fetch=FetchType.LAZY)

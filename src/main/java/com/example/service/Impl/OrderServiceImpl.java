@@ -1,10 +1,16 @@
 package com.example.service.Impl;
 
+import com.example.exception.ResourceNotFoundException;
+import com.example.model.DishExtra;
 import com.example.model.Order;
+import com.example.model.OrderDetail;
+import com.example.repository.DishRepository;
+import com.example.repository.ExtraRepository;
 import com.example.repository.OrderRepository;
 import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -16,28 +22,68 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private ExtraRepository extraRepository;
+
+    @Autowired
+    private DishRepository dishRepository;
+
+    @Transactional
     @Override
     public Order createOrder(Order order) {
-        return null;
+
+        CalculateSubTotalDishExtra(order.getDishes());
+        CalculateSubTotalOrderDetail(order.getDishes());
+
+        return orderRepository.save(order);
     }
 
+    public void CalculateSubTotalDishExtra(List<OrderDetail> dishes){
+        for (OrderDetail od : dishes){
+            for(DishExtra ex : od.getExtras()){
+                ex.setSubTotal(
+                        extraRepository.getOne(ex.getExtra().getId()).getPrice() *
+                        ex.getQuantity()
+                );
+            }
+        }
+    }
+    public void CalculateSubTotalOrderDetail(List<OrderDetail> dishes){
+        for (OrderDetail od : dishes){
+            od.setSubTotal(
+                    od.getExtras().stream().mapToDouble(x -> x.getSubTotal()).sum() +
+                    dishRepository.getOne(od.getDish().getId()).getPrice()
+            );
+        }
+    }
+
+    @Transactional
     @Override
-    public Order updateOrderState(String order) {
-        return null;
+    public Order updateOrderState(Long id, String order) {
+        Order orderDB = orderRepository.getOne(id);
+        if(orderDB == null){
+            throw new ResourceNotFoundException("There is no order with Id " + id);
+        }
+        orderDB.setState(order);
+
+        return orderRepository.save(orderDB);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Order> getAllOrders() {
-        return null;
+        return orderRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<Order> getOrderById(Long id) {
-        return null;
+    public Order getOrderById(Long id) {
+        return orderRepository.findOrderById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Order> getAllOrdersByState(String state) {
-        return null;
+        return orderRepository.findOrderByState(state);
     }
 }

@@ -7,8 +7,8 @@ import java.util.List;
 public interface OrderService {
 
     Order createOrder(Order order);
-    Order updateOrderState(String order);
+    Order updateOrderState(Long id, String order);
     List<Order> getAllOrders();
-    List<Order> getOrderById(Long id);
+    Order getOrderById(Long id);
     List<Order> getAllOrdersByState(String state);
 }

@@ -32,7 +32,7 @@ public class OrderDetail {
 
     @OneToMany(mappedBy = "orderDetail", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE }, fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_detail_id", nullable = true)
+    //@JoinColumn(name = "order_detail_id", nullable = true)
     private List<DishExtra> extras;
 
     private double subTotal;

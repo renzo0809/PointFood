@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="platos")
+@Table(name="dishes")
 public class Dish {
 
     @Id

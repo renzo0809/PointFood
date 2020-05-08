@@ -14,6 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -45,12 +46,12 @@ public class Client {
     @NotNull(message = "La fecha de nacimiento no puede ser vacío")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "birth_date")
-    private LocalDateTime birthDate;
+    private Date birthDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     @Column(name = "signed_up_at")
-    private LocalDateTime signedUpAt;
+    private Date signedUpAt;
 
     @NotNull(message = "El nombre de usuario no puede ser vacío")
     @Column(name = "username", unique = true, length = 20, nullable = false)
@@ -61,5 +62,6 @@ public class Client {
     private String password;
 
     @OneToMany
+    @JoinColumn(name="client_id")
     private List<Card> cards;
 }

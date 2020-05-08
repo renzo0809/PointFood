@@ -48,5 +48,6 @@ public class RestaurantOwner {
     private String password;
 
     @OneToMany
+    @JoinColumn(name="restaurant_owner_id")
     private List<Restaurant> restaurants;
 }
