@@ -24,6 +24,16 @@ public class CardServiceImpl implements CardService {
         return cardRepository.save(card);
     }
 
+    @Transactional
+    @Override
+    public Card getCard(Long id) {
+        Card cardDB=cardRepository.getOne(id);
+        if(cardDB==null){
+            throw new ResourceNotFoundException("There is no card with Id " + id);
+        }
+        return cardDB;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<Card> getCardByClientId(Long id) {

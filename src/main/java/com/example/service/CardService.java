@@ -8,6 +8,7 @@ import java.util.List;
 public interface CardService {
 
     Card createCard(Card card);
+    Card getCard(Long id);
     List<Card> getCardByClientId(Long id);
     Card updateCard(Long id, Card card);
     ResponseEntity<?> deleteCard(Long id);
