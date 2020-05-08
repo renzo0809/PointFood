@@ -14,46 +14,30 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Override
-    public List<Order> listAllOrden() {
-        return orderRepository.findAll();
+    public Order createOrder(Order order) {
+        return null;
     }
 
     @Override
-    public Order getOrden(Long id) {
-        return orderRepository.findById(id).orElse(null);
+    public Order updateOrderState(String order) {
+        return null;
     }
 
     @Override
-    public Order createOrden(Order order) {
-        order.setRegistrationTime(new Date());
-        return orderRepository.save(order);
+    public List<Order> getAllOrders() {
+        return null;
     }
 
     @Override
-    public Order updateOrden(Order order) {
-       Order orderDB = this.getOrden(order.getId());
-       if(orderDB ==null)
-       {
-            return null;
-       }
-       orderDB.setOrderTime(order.getOrderTime());
-       orderDB.setPlatos(order.getPlatos());
-       double price= 0.0;
-        for (int i = 0; i < order.getPlatos().size(); i++) {
-            for (int j = 0; j < order.getPlatos().get(i).getInsumos().size(); j++) {
-                price=price+ order.getPlatos().get(i).getInsumos().get(j).getPrice();
-            }
-            price=price+ order.getPlatos().get(i).getPrice();
-        }
-        orderDB.setPrice(price);
-        return orderRepository.save(orderDB);
+    public List<Order> getOrderById(Long id) {
+        return null;
     }
 
     @Override
-    public void deleteOrden(Long id) {
-        orderRepository.deleteById(id);
+    public List<Order> getAllOrdersByState(String state) {
+        return null;
     }
 }

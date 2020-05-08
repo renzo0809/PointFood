@@ -1,48 +1,55 @@
 package com.example.service.Impl;
 
+import com.example.exception.ResourceNotFoundException;
 import com.example.model.Card;
 import com.example.repository.CardRepository;
 import com.example.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CardServiceImpl implements CardService {
+
     @Autowired
-    CardRepository CardRepository;
+    private CardRepository cardRepository;
 
+    @Transactional
     @Override
-    public List<Card> listAllTarjetas() {
-        return CardRepository.findAll();
+    public Card createCard(Card card) {
+        return cardRepository.save(card);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public Card getTarjeta(Long id) {
-        return CardRepository.findById(id).orElse(null);
+    public List<Card> getCardByClientId(Long id) {
+        return cardRepository.findCardByClient(id);
     }
 
+    @Transactional
     @Override
-    public Card createTarjeta(Card Card) {
-        return CardRepository.save(Card);
-    }
-
-    @Override
-    public Card updateTarjeta(Card Card) {
-        Optional<Card> TarjetaDB= CardRepository.findById(Card.getId());
-        if(!TarjetaDB.isPresent()){
-            return null;
+    public Card updateCard(Long id, Card card) {
+        Card cardDB = cardRepository.getOne(id);
+        if(cardDB == null){
+            throw new ResourceNotFoundException("There is no card with Id " + id);
         }
-        TarjetaDB.get().setId(Card.getId());
-        TarjetaDB.get().setCliente(Card.getCliente());
-        TarjetaDB.get().setNumber(Card.getNumber());
-        return CardRepository.save(TarjetaDB.get());
+        cardDB.setNumber(card.getNumber());
+
+        return cardRepository.save(cardDB);
     }
 
+    @Transactional
     @Override
-    public void deleteTarjeta(Long id) {
-        CardRepository.deleteById(id);
+    public ResponseEntity<?> deleteCard(Long id) {
+        Card cardDB = cardRepository.getOne(id);
+        if (cardDB == null){
+            throw  new ResourceNotFoundException("There is no Card with Id " + id);
+        }
+        cardRepository.delete(cardDB);
+        return ResponseEntity.ok().build();
     }
 }

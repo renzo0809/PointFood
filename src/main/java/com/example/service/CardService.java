@@ -9,6 +9,6 @@ public interface CardService {
 
     Card createCard(Card card);
     List<Card> getCardByClientId(Long id);
-    Card updateCard(Card card);
+    Card updateCard(Long id, Card card);
     ResponseEntity<?> deleteCard(Long id);
 }
