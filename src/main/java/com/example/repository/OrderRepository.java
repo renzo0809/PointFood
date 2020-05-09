@@ -13,5 +13,5 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     Order findOrderById(Long id);
 
     @Query("SELECT o FROM Order o WHERE o.state=?1")
-    List<Order> findOrderByState(String state);
+    List<Order> findAllByState(String state);
 }

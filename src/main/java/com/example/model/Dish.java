@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name="dishes")
-public class Dish {
+public class Dish implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

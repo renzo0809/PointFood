@@ -15,7 +15,7 @@ import java.util.List;
         @Autowired
         private RestaurantService restaurantService;
 
-        @GetMapping(value = {"/{id}"})
+        @GetMapping(value = {"owners/{id}"})
         public ResponseEntity<List<Restaurant>>getAllRestaurantsByRestaurantOwnerId(@PathVariable("id") Long id)
         {
             List<Restaurant> restaurants = restaurantService.getAllRestaurantsByRestaurantOwnerId(id);

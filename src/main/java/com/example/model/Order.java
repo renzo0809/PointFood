@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,10 +20,11 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"registered_at"}, allowGetters = true)
 @Builder
 @Table(name="orders")
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -29,11 +32,10 @@ public class Order {
 
     @JoinColumn(name="client_id", nullable = false)
     @ManyToOne(fetch=FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Client client;
 
-    @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REMOVE }, fetch = FetchType.LAZY)
-    //@JoinColumn(name = "order_id", nullable = false)
+    @OneToMany(mappedBy = "order")
     private List<OrderDetail> dishes;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,6 +50,7 @@ public class Order {
 
     @JoinColumn(name="restaurant_id", nullable = false)
     @ManyToOne(fetch=FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Restaurant restaurant;
 
     @Column(name = "total", precision = 6, scale =  2, nullable = false)

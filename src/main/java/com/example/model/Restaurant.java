@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Data
@@ -15,8 +16,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="restaurantes")
-public class Restaurant {
+@Table(name="restaurants")
+public class Restaurant implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

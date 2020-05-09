@@ -19,6 +19,16 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
     @Autowired
     private RestaurantOwnerRepository restaurantOwnerRepository;
 
+    @Transactional
+    @Override
+    public RestaurantOwner getRestaurantOwnerById(Long id) {
+        RestaurantOwner restaurantOwnerDB = restaurantOwnerRepository.getOne(id);
+        if(restaurantOwnerDB == null){
+            throw new ResourceNotFoundException("There is no restaurant owner with Id " + id);
+        }
+        return restaurantOwnerDB;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public RestaurantOwner getRestaurantOwnerByUsernameAndPassword(String username, String password) {
@@ -43,12 +53,12 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
 
     @Transactional
     @Override
-    public RestaurantOwner deleteRestaurantOwner(Long id) {
+    public ResponseEntity<?> deleteRestaurantOwner(Long id) {
         RestaurantOwner restaurantOwnerDB = restaurantOwnerRepository.getOne(id);
         if(restaurantOwnerDB == null){
             throw new ResourceNotFoundException("There is no restaurant with Id " + id );
         }
         restaurantOwnerRepository.delete(restaurantOwnerDB);
-        return restaurantOwnerDB;
+        return ResponseEntity.ok().build();
     }
 }

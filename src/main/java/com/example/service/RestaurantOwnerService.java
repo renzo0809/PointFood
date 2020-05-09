@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface RestaurantOwnerService {
 
+    RestaurantOwner getRestaurantOwnerById(Long id);
     RestaurantOwner getRestaurantOwnerByUsernameAndPassword(String username, String password);
     RestaurantOwner updateRestaurantOwner(Long id, RestaurantOwner restaurantOwner);
-    RestaurantOwner deleteRestaurantOwner(Long id);
+    ResponseEntity<?> deleteRestaurantOwner(Long id);
 }

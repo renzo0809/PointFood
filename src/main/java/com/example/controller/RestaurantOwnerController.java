@@ -13,46 +13,40 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/restaurantOwners")
+@RequestMapping("/restaurant-owners")
 public class RestaurantOwnerController {
 
     @Autowired
     private RestaurantOwnerService restaurantOwnerService;
 
-    @GetMapping()
-    public ResponseEntity<RestaurantOwner> listAllRestaurantOwners(@RequestParam String username,
-                                                                         @RequestParam String password)
+    @GetMapping("/login")
+    public ResponseEntity<RestaurantOwner> login(@RequestBody RestaurantOwner restaurantOwner)
     {
-        RestaurantOwner restaurantOwner=restaurantOwnerService
-                .getRestaurantOwnerByUsernameAndPassword(username,password);
-        if(restaurantOwner==null)
-        {
+        RestaurantOwner restaurantOwnerDB = restaurantOwnerService
+                .getRestaurantOwnerByUsernameAndPassword(restaurantOwner.getUsername(),restaurantOwner.getPassword());
+        if(restaurantOwnerDB == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(restaurantOwner);
-    }
 
-
-    @PutMapping("/{id}")
-    public ResponseEntity<RestaurantOwner> updateRestaurantOwner(@PathVariable Long id,
-                                                                 @RequestBody RestaurantOwner restaurantOwner)
-    {
-        restaurantOwner.setId(id);
-        RestaurantOwner restaurantOwnerDB=restaurantOwnerService.updateRestaurantOwner(id,restaurantOwner);
-        if(restaurantOwnerDB==null)
-        {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(restaurantOwnerDB);
     }
-    @DeleteMapping("{id}")
-    public ResponseEntity<RestaurantOwner> deleteRestaurantOwner(@PathVariable Long id)
-    {
-        RestaurantOwner restaurantOwnerDelete=restaurantOwnerService.deleteRestaurantOwner(id);
-        if(restaurantOwnerDelete==null)
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RestaurantOwner> updateRestaurantOwner(@PathVariable("id") Long id,
+                                                                 @RequestBody RestaurantOwner restaurantOwner) {
+        RestaurantOwner restaurantOwnerDB = restaurantOwnerService.getRestaurantOwnerById(id);
+        if(restaurantOwnerDB == null)
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(restaurantOwnerDelete);
+        restaurantOwner.setId(id);
+        restaurantOwnerDB = restaurantOwnerService.updateRestaurantOwner(id,restaurantOwner);
+        return ResponseEntity.ok(restaurantOwnerDB);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRestaurantOwner(@PathVariable("id") Long id)
+    {
+        return restaurantOwnerService.deleteRestaurantOwner(id);
     }
 }

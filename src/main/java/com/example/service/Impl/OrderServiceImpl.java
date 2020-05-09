@@ -4,9 +4,7 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.DishExtra;
 import com.example.model.Order;
 import com.example.model.OrderDetail;
-import com.example.repository.DishRepository;
-import com.example.repository.ExtraRepository;
-import com.example.repository.OrderRepository;
+import com.example.repository.*;
 import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +26,30 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private DishRepository dishRepository;
 
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    private DishExtraRepository dishExtraRepository;
+
     @Transactional
     @Override
     public Order createOrder(Order order) {
 
+        order.setState("Pendiente");
+        orderRepository.save(order);
+        for (OrderDetail od : order.getDishes()){
+            od.setOrder(order);
+            orderDetailRepository.save(od);
+            for(DishExtra ex : od.getExtras()){
+                ex.setOrderDetail(od);
+                dishExtraRepository.save(ex);
+            }
+        }
+
         CalculateSubTotalDishExtra(order.getDishes());
         CalculateSubTotalOrderDetail(order.getDishes());
-
+        CalculateTotalOrder(order);
         return orderRepository.save(order);
     }
 
@@ -55,6 +70,10 @@ public class OrderServiceImpl implements OrderService {
                     dishRepository.getOne(od.getDish().getId()).getPrice()
             );
         }
+    }
+
+    public void CalculateTotalOrder(Order order){
+        order.setTotal(order.getDishes().stream().mapToDouble(x -> x.getSubTotal()).sum());
     }
 
     @Transactional
@@ -84,6 +103,6 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     @Override
     public List<Order> getAllOrdersByState(String state) {
-        return orderRepository.findOrderByState(state);
+        return orderRepository.findAllByState(state);
     }
 }

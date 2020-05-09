@@ -21,7 +21,7 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
-    @GetMapping(value = {"/{id}"})
+    @GetMapping(value = {"/clients/{id}"})
     public ResponseEntity<List<Card>>listAllClientCards(@PathVariable("id") Long id){
         List<Card> cards=cardService.getCardByClientId(id);
         if (cards.isEmpty()){

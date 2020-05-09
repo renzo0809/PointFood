@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Data
@@ -17,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Builder
 @Table(name = "cards")
-public class Card {
+public class Card implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

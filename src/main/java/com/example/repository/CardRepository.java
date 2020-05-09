@@ -13,6 +13,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("SELECT ca FROM Card ca WHERE ca.id=?1")
     Card findCardById(Long id);
 
-    @Query("SELECT ca FROM Card ca WHERE ca.id=?1")
+    @Query("SELECT ca FROM Card ca WHERE ca.client.id=?1")
     List<Card> findCardByClient(Long id);
 }

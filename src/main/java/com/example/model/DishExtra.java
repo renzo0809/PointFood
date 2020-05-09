@@ -1,5 +1,7 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,10 +25,13 @@ public class DishExtra implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "order_detail_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @JsonIgnore
     private OrderDetail orderDetail;
 
     @ManyToOne
     @JoinColumn(name = "extra_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Extra extra;
 
     @Min(1)
