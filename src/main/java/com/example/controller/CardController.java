@@ -21,7 +21,7 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
-    @GetMapping(value = {"/id"})
+    @GetMapping(value = {"/{id}"})
     public ResponseEntity<List<Card>>listAllClientCards(@PathVariable("id") Long id){
         List<Card> cards=cardService.getCardByClientId(id);
         if (cards.isEmpty()){
@@ -39,7 +39,7 @@ public class CardController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(cardDB);
     }
-    @PutMapping(value = {"/id"})
+    @PutMapping(value = {"/{id}"})
     public ResponseEntity<?> updateCard(@PathVariable("id") long id,@RequestBody Card card){
         card.setId(id);
         Card currentCard=cardService.updateCard(id, card);
@@ -49,7 +49,7 @@ public class CardController {
         return ResponseEntity.ok(currentCard);
     }
 
-    @DeleteMapping(value = {"/id"})
+    @DeleteMapping(value = {"/{id}"})
     public ResponseEntity<?> deleteCard(@PathVariable("id") long id){
         Card card = cardService.getCard(id);
         if(card==null){
