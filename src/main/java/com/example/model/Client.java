@@ -61,7 +61,4 @@ public class Client {
     @Column(name = "password", length = 8, nullable = false)
     private String password;
 
-    @OneToMany
-    @JoinColumn(name="client_id")
-    private List<Card> cards;
 }
