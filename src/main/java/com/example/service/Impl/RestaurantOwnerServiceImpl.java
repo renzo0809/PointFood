@@ -43,12 +43,12 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
 
     @Transactional
     @Override
-    public ResponseEntity<?> deleteRestaurantOwner(Long id) {
+    public RestaurantOwner deleteRestaurantOwner(Long id) {
         RestaurantOwner restaurantOwnerDB = restaurantOwnerRepository.getOne(id);
         if(restaurantOwnerDB == null){
             throw new ResourceNotFoundException("There is no restaurant with Id " + id );
         }
         restaurantOwnerRepository.delete(restaurantOwnerDB);
-        return ResponseEntity.ok().build();
+        return restaurantOwnerDB;
     }
 }
