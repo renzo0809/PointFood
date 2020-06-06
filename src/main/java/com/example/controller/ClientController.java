@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import com.example.model.Card;
 import com.example.model.Client;
+import com.example.service.CardService;
 import com.example.service.ClientService;
 import com.example.util.Message;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private CardService cardService;
 
     @PostMapping
     public ResponseEntity<Client> createClient(@Valid @RequestBody Client client, BindingResult result){
@@ -77,5 +82,15 @@ public class ClientController {
         }
 
         return ResponseEntity.ok(clientDB);
+    }
+
+
+    @PostMapping
+    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, BindingResult result){
+        if(result.hasErrors()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Message.formatMessage(result));
+        }
+        Card cardDB = cardService.createCard(card);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cardDB);
     }
 }
