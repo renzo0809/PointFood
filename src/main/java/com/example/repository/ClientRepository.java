@@ -10,6 +10,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("SELECT c FROM Client c WHERE c.username=?1 and c.password=?2")
     Client findClientByUsernameAndPassword(String username, String password);
-
+    Client findClientByUsernameAndEmail(String username, String email);
     Client findClientById(Long id);
 }

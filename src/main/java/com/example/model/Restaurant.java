@@ -36,6 +36,10 @@ public class Restaurant implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private RestaurantOwner restaurantOwner;
 
+    @NotNull(message = "El numero de celular no puede ser vacío")
+    @Column(name = "phone", length = 9, nullable = false)
+    private String phone;
+
     @Valid
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)

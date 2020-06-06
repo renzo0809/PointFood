@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface DishService {
 
+    Dish createDish(Dish dish);
+    List<Dish> getDishByRestaurantId(Long id);
+    Dish updateDish(Long id, Dish dish);
     List<Dish> getAllDishes();
 }

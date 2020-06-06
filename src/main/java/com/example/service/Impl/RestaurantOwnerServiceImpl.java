@@ -35,6 +35,12 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
         return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndPassword(username, password);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public RestaurantOwner getRestaurantOwnerByUsernameAndEmail(String username, String email) {
+        return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndEmail(username, email);
+    }
+
     @Transactional
     @Override
     public RestaurantOwner updateRestaurantOwner(Long id, RestaurantOwner restaurantOwner) {

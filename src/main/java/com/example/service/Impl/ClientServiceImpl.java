@@ -41,17 +41,19 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findClientByUsernameAndPassword(username, password);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Client getClientByUsernameAndEmail(String username, String email) {
+        return clientRepository.findClientByUsernameAndEmail(username, email);
+    }
+
     @Transactional
     @Override
     public Client updateClient(Long id ,Client client) {
         Client clientDB = clientRepository.getOne(id);
-        if(clientDB == null){
-            throw new ResourceNotFoundException("There is no client with Id " + id);
-        }
+
         clientDB.setName(client.getName());
-        clientDB.setDni(client.getDni());
-        clientDB.setEmail(client.getEmail());
-        clientDB.setBirthDate(client.getBirthDate());
+        clientDB.setPhone(client.getPhone());
         clientDB.setUsername(client.getUsername());
         clientDB.setPassword(client.getPassword());
 

@@ -49,7 +49,7 @@ public class ClientController {
 
     @GetMapping
     public ResponseEntity<List<Client>> listAllClients(){
-        List<Client> clients = new ArrayList<>();
+        List<Client> clients;
         clients = clientService.getAllClients();
         if (clients.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -59,9 +59,9 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody Client client){
+    public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody Client client) {
         Client clientDB = clientService.getClientById(id);
-        if(null == clientDB){
+        if (clientDB == null) {
             return ResponseEntity.notFound().build();
         }
         client.setId(id);
@@ -77,10 +77,18 @@ public class ClientController {
     @GetMapping("/login")
     public ResponseEntity<Client> login(@RequestBody Client client){
         Client clientDB = clientService.getClientByUsernameAndPassword(client.getUsername(), client.getPassword());
-        if(null == client){
+        if(null == clientDB){
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(clientDB);
+    }
 
+    @GetMapping("/recovery")
+    public ResponseEntity<Client> recovery(@RequestBody Client client){
+        Client clientDB = clientService.getClientByUsernameAndEmail(client.getUsername(), client.getEmail());
+        if(null == clientDB){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(clientDB);
     }
 
