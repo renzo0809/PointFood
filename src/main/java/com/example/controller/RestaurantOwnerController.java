@@ -31,6 +31,18 @@ public class RestaurantOwnerController {
         return ResponseEntity.ok(restaurantOwnerDB);
     }
 
+    @GetMapping("/recovery")
+    public ResponseEntity<RestaurantOwner> recovery(@RequestBody RestaurantOwner restaurantOwner)
+    {
+        RestaurantOwner restaurantOwnerDB = restaurantOwnerService
+                .getRestaurantOwnerByUsernameAndEmail(restaurantOwner.getUsername(),restaurantOwner.getEmail());
+        if(restaurantOwnerDB == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(restaurantOwnerDB);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<RestaurantOwner> updateRestaurantOwner(@PathVariable("id") Long id,
                                                                  @RequestBody RestaurantOwner restaurantOwner) {

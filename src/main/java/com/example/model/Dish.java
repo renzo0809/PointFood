@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,4 +31,9 @@ public class Dish implements Serializable {
     @Min(0)
     @Column(name = "price", precision = 5, scale =  2, nullable = false)
     private double price;
+
+    @OneToMany
+    @JoinColumn(name="restaurant_id")
+    @JsonIgnore
+    private List<Restaurant> restaurants;
 }

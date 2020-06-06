@@ -39,7 +39,7 @@ public class Client implements Serializable {
     private String name;
 
     @NotNull(message = "El numero de celular no puede ser vacío")
-    @Column(name = "phone", length = 10, nullable = false)
+    @Column(name = "phone", length = 9, nullable = false)
     private String phone;
 
     @NotNull(message = "El email no puede ser vacío")

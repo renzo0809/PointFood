@@ -43,6 +43,9 @@ public class Order implements Serializable {
     @Column(name = "registered_at", nullable = false)
     private Date registeredAt;
 
+    @Column(name="adress")
+    private String adress;
+
     @NotNull(message = "La fecha de entrega no puede ser vacío")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "delivered_at", nullable = false)
@@ -55,9 +58,6 @@ public class Order implements Serializable {
 
     @Column(name = "total", precision = 6, scale =  2, nullable = false)
     private double total;
-
-    @Column(name="adress")
-    private String adress;
 
     @JoinColumn(name="status_id", nullable = true)
     @ManyToOne(fetch=FetchType.LAZY)
