@@ -48,7 +48,7 @@ public class OrderController {
         if (null == orderDB) {
             return ResponseEntity.notFound().build();
         }else{
-            orderService.updateOrderState(id, order.getState());
+            orderService.updateOrderState(id, order.getState().getName());
         }
 
         return ResponseEntity.ok(orderDB);
@@ -68,7 +68,7 @@ public class OrderController {
     @GetMapping("/states")
     public ResponseEntity<List<Order>> listAllOrdersByState(@RequestBody Order order){
         List<Order> orders = new ArrayList<>();
-        orders = orderService.getAllOrdersByState(order.getState());
+        orders = orderService.getAllOrdersByState(order.getState().getName());
         if(orders.isEmpty()){
             return ResponseEntity.noContent().build();
         }

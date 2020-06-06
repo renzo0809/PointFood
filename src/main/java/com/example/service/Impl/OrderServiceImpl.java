@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(Order order) {
 
-        order.setState("Pendiente");
+        order.getState().setName("Pendiente");
         orderRepository.save(order);
         for (OrderDetail od : order.getDishes()){
             od.setOrder(order);
@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         if(orderDB == null){
             throw new ResourceNotFoundException("There is no order with Id " + id);
         }
-        orderDB.setState(order);
+        orderDB.getState().setName(order);
 
         return orderRepository.save(orderDB);
     }

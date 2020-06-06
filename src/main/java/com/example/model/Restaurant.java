@@ -7,8 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Data
@@ -33,4 +35,16 @@ public class Restaurant implements Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private RestaurantOwner restaurantOwner;
+
+    @Valid
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @JoinColumn(name="restaurant_id")
+    private List<Dish> dishes;
+
+    @Valid
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @JoinColumn(name="restaurant_id")
+    private List<Extra> extras;
 }

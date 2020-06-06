@@ -27,7 +27,6 @@ public class OrderDetail implements Serializable {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-    @JsonIgnore
     private Order order;
 
     @ManyToOne

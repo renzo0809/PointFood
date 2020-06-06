@@ -48,7 +48,7 @@ public class Order implements Serializable {
     @Column(name = "delivered_at", nullable = false)
     private Date deliveredAt;
 
-    @JoinColumn(name="restaurant_id", nullable = false)
+    @JoinColumn(name="restaurant_id", nullable = true)
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Restaurant restaurant;
@@ -56,6 +56,13 @@ public class Order implements Serializable {
     @Column(name = "total", precision = 6, scale =  2, nullable = false)
     private double total;
 
-    @Column(name = "state", length = 10, nullable = false)
-    private String state;
+    @Column(name="adress")
+    private String adress;
+
+    @JoinColumn(name="status_id", nullable = true)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    private State state;
+
+
 }
