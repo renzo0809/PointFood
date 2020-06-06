@@ -38,19 +38,13 @@ public class Client implements Serializable {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @NotNull(message = "El DNI no puede ser vacío")
-    @Size(min=8,max=8)
-    @Column(name = "dni", unique = true,length = 8, nullable = false)
-    private String dni;
+    @NotNull(message = "El numero de celular no puede ser vacío")
+    @Column(name = "phone", length = 10, nullable = false)
+    private String phone;
 
     @NotNull(message = "El email no puede ser vacío")
     @Column(name = "email", length = 30, nullable = false)
     private String email;
-
-    @NotNull(message = "La fecha de nacimiento no puede ser vacío")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "birth_date")
-    private Date birthDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
