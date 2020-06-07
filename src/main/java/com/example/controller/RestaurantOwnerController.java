@@ -1,8 +1,10 @@
 package com.example.controller;
 
 
+import com.example.model.Restaurant;
 import com.example.model.RestaurantOwner;
 import com.example.service.RestaurantOwnerService;
+import com.example.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ public class RestaurantOwnerController {
 
     @Autowired
     private RestaurantOwnerService restaurantOwnerService;
+
+    @Autowired
+    private RestaurantService restaurantService;
+
 
     @GetMapping("/login")
     public ResponseEntity<RestaurantOwner> login(@RequestBody RestaurantOwner restaurantOwner)
@@ -60,5 +66,17 @@ public class RestaurantOwnerController {
     public ResponseEntity<?> deleteRestaurantOwner(@PathVariable("id") Long id)
     {
         return restaurantOwnerService.deleteRestaurantOwner(id);
+    }
+
+    @PostMapping("/{ownerid}/addRestaurant")
+    public ResponseEntity<?> postRestaurant(@PathVariable("ownerid") Long id, @RequestBody Restaurant restaurant){
+        RestaurantOwner restaurantOwnerDB= restaurantOwnerService.getRestaurantOwnerById(id);
+        if(restaurantOwnerDB == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        restaurant.setRestaurantOwner(restaurantOwnerDB);
+        Restaurant restaurantDB = restaurantService.createRestaurant(restaurant);
+        return ResponseEntity.ok(restaurantDB);
     }
 }

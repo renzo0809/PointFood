@@ -93,7 +93,7 @@ public class ClientController {
     }
 
 
-    @PostMapping
+    @PostMapping("/card")
     public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, BindingResult result){
         if(result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Message.formatMessage(result));

@@ -1,6 +1,9 @@
 package com.example.controller;
 
 import com.example.model.Order;
+import com.example.model.OrderDetail;
+import com.example.repository.OrderDetailRepository;
+import com.example.service.OrderDetailService;
 import com.example.service.OrderService;
 import com.example.util.Message;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderDetailService orderDetailService;
+
     @PostMapping
     public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order, BindingResult result){
         if(result.hasErrors()){
@@ -41,6 +47,21 @@ public class OrderController {
 
         return ResponseEntity.ok(order);
     }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<?> getOrderDetails(@PathVariable("id")Long id){
+        Order order = orderService.getOrderById(id);
+        if (null == order) {
+            return ResponseEntity.notFound().build();
+        }
+        List<OrderDetail> orderDetailsDB=orderDetailService.findAllOrderDetailByOrderId(id);
+        if(orderDetailsDB.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(orderDetailsDB);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrderState(@PathVariable("id") Long id, @RequestBody Order order){
