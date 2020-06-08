@@ -25,6 +25,8 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private CardService cardService;
     @PostMapping
     public ResponseEntity<Client> postClient(@Valid @RequestBody Client client, BindingResult result){
         if(result.hasErrors()){
@@ -83,5 +85,14 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(clientDB);
+    }
+
+    @PostMapping
+    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, BindingResult result){
+        if(result.hasErrors()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Message.formatMessage(result));
+        }
+        Card cardDB = cardService.createCard(card);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cardDB);
     }
 }
