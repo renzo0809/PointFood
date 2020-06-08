@@ -21,24 +21,14 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
 
     @Transactional
     @Override
+    public RestaurantOwner createRestaurantOwner(RestaurantOwner restaurantOwner) {
+        return restaurantOwnerRepository.save(restaurantOwner);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public RestaurantOwner getRestaurantOwnerById(Long id) {
-        RestaurantOwner restaurantOwnerDB = restaurantOwnerRepository.getOne(id);
-        if(restaurantOwnerDB == null){
-            throw new ResourceNotFoundException("There is no restaurant owner with Id " + id);
-        }
-        return restaurantOwnerDB;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public RestaurantOwner getRestaurantOwnerByUsernameAndPassword(String username, String password) {
-        return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndPassword(username, password);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public RestaurantOwner getRestaurantOwnerByUsernameAndEmail(String username, String email) {
-        return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndEmail(username, email);
+        return restaurantOwnerRepository.findRestaurantOwnerById(id);
     }
 
     @Transactional
@@ -49,7 +39,7 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
             throw new ResourceNotFoundException("There is no restaurant with Id " + id );
         }
         restaurantOwnerDB.setName(restaurantOwner.getName());
-        restaurantOwnerDB.setDni(restaurantOwner.getDni());
+        restaurantOwnerDB.setPhone(restaurantOwner.getPhone());
         restaurantOwnerDB.setEmail(restaurantOwner.getEmail());
         restaurantOwnerDB.setUsername(restaurantOwner.getUsername());
         restaurantOwnerDB.setPassword(restaurantOwner.getPassword());
@@ -65,6 +55,19 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
             throw new ResourceNotFoundException("There is no restaurant with Id " + id );
         }
         restaurantOwnerRepository.delete(restaurantOwnerDB);
+
         return ResponseEntity.ok().build();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public RestaurantOwner getRestaurantOwnerByUsernameAndPassword(String username, String password) {
+        return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndPassword(username, password);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public RestaurantOwner getRestaurantOwnerByUsernameAndEmail(String username, String email) {
+        return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndEmail(username, email);
     }
 }

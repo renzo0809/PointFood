@@ -6,6 +6,7 @@ import com.example.model.Dish;
 import com.example.repository.DishRepository;
 import com.example.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,29 +25,39 @@ public class DishServiceImpl implements DishService {
         return dishRepository.save(dish);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Dish getDishById(Long id) {
+        return dishRepository.findDishById(id);
+    }
+
     @Transactional
     @Override
     public Dish updateDish(Long id, Dish dish) {
         Dish dishDB = dishRepository.getOne(id);
-        if(dishDB == null){
-            throw new ResourceNotFoundException("There is not dish with Id " + id);
-        }
+
         dishDB.setName(dish.getName());
+        dishDB.setDescription(dish.getDescription());
         dishDB.setPrice(dish.getPrice());
 
         return dishRepository.save(dishDB);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
-    public List<Dish> getDishByRestaurantId(Long id)
-    {
-        return dishRepository.findDishByRestaurant(id);
+    public ResponseEntity<?> deleteDish(Long id) {
+        Dish dishDB = dishRepository.getOne(id);
+        if(dishDB == null){
+            throw new ResourceNotFoundException("There is no dish with Id " + id);
+        }
+        dishRepository.delete(dishDB);
+
+        return ResponseEntity.ok().build();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Dish> getAllDishes() {
-        return dishRepository.findAll();
+    public List<Dish> getDishesByRestaurant(Long id) {
+        return dishRepository.findDishesByRestaurant(id);
     }
 }

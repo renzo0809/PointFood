@@ -25,40 +25,55 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
-    @GetMapping(value = {"/restaurants/{id}"})
-    public ResponseEntity<List<Dish>>listAllDishRestaurants(@PathVariable("id") Long id){
-        List<Dish> dish = dishService.getDishByRestaurantId(id);
-        if (dish.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(dish);
-    }
-
     @PostMapping
-    public ResponseEntity<Dish> createDish(@Valid @RequestBody Dish dish, BindingResult result){
+    public ResponseEntity<Dish> postDish(@Valid @RequestBody Dish dish, BindingResult result){
         if(result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Message.formatMessage(result));
         }
         Dish dishDB = dishService.createDish(dish);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(dishDB);
     }
 
-    @PutMapping(value = {"/{id}"})
-    public ResponseEntity<?> updateDish(@PathVariable("id") long id,@RequestBody Dish dish){
-        dish.setId(id);
-        Dish currentDish = dishService.updateDish(id, dish);
-        if(currentDish==null){
+    @GetMapping("/{id}")
+    public ResponseEntity<Dish> getDish(@PathVariable("id")Long id){
+        Dish dishDB =  dishService.getDishById(id);
+        if(dishDB == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(currentDish);
+
+        return ResponseEntity.ok(dishDB);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Dish>> listAllDishes(){
-        List<Dish>dishes=dishService.getAllDishes();
-        if(dishes.isEmpty()){
+    @PutMapping("/{id}")
+    public ResponseEntity<Dish> updateDish(@PathVariable("id") long id, @RequestBody Dish dish){
+        Dish dishDB =  dishService.getDishById(id);
+        if(dishDB == null) {
+            return ResponseEntity.notFound().build();
+        }
+        dish.setId(id);
+        dishDB = dishService.updateDish(id, dish);
+
+        return ResponseEntity.ok(dishDB);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDish(@PathVariable("id") Long id){
+        Dish dishDB =  dishService.getDishById(id);
+        if(dishDB == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return dishService.deleteDish(id);
+    }
+
+    @GetMapping("/restaurants/{id}")
+    public ResponseEntity<List<Dish>>listDishesByRestaurant(@PathVariable("id") Long id){
+        List<Dish> dishes = dishService.getDishesByRestaurant(id);
+        if (dishes.isEmpty()){
             return ResponseEntity.noContent().build();
         }
+
         return ResponseEntity.ok(dishes);
     }
 }

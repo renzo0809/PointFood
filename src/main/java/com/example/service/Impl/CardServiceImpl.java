@@ -23,20 +23,15 @@ public class CardServiceImpl implements CardService {
         return cardRepository.save(card);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public Card getCard(Long id) {
-        Card cardDB=cardRepository.getOne(id);
+    public Card getCardById(Long id) {
+        Card cardDB=cardRepository.findCardById(id);
         if(cardDB==null){
             throw new ResourceNotFoundException("There is no card with Id " + id);
         }
-        return cardDB;
-    }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<Card> getCardByClientId(Long id) {
-        return cardRepository.findCardByClient(id);
+        return cardDB;
     }
 
     @Transactional
@@ -59,6 +54,13 @@ public class CardServiceImpl implements CardService {
             throw  new ResourceNotFoundException("There is no Card with Id " + id);
         }
         cardRepository.delete(cardDB);
+
         return ResponseEntity.ok().build();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Card> getCardsByClient(Long id) {
+        return cardRepository.findCardsByClient(id);
     }
 }

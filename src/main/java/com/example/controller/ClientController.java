@@ -25,37 +25,24 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @Autowired
-    private CardService cardService;
-
     @PostMapping
-    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client, BindingResult result){
+    public ResponseEntity<Client> postClient(@Valid @RequestBody Client client, BindingResult result){
         if(result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Message.formatMessage(result));
         }
         Client clientDB = clientService.createClient(client);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(clientDB);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> getClient(@PathVariable("id")Long id){
-        Client client = clientService.getClientById(id);
-        if(null == client){
+        Client clientDB = clientService.getClientById(id);
+        if(clientDB == null){
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(client);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Client>> listAllClients(){
-        List<Client> clients;
-        clients = clientService.getAllClients();
-        if (clients.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(clients);
+        return ResponseEntity.ok(clientDB);
     }
 
     @PutMapping("/{id}")
@@ -66,39 +53,35 @@ public class ClientController {
         }
         client.setId(id);
         clientDB = clientService.updateClient(id, client);
+
         return ResponseEntity.ok(clientDB);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteClient(@PathVariable(name = "id")Long id){
+    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
+        Client clientDB = clientService.getClientById(id);
+        if (clientDB == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return clientService.deleteClient(id);
     }
 
     @GetMapping("/login")
     public ResponseEntity<Client> login(@RequestBody Client client){
         Client clientDB = clientService.getClientByUsernameAndPassword(client.getUsername(), client.getPassword());
-        if(null == clientDB){
+        if(clientDB == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(clientDB);
     }
 
-    @GetMapping("/recovery")
-    public ResponseEntity<Client> recovery(@RequestBody Client client){
+    @GetMapping("/recover")
+    public ResponseEntity<Client> recoverAccount(@RequestBody Client client){
         Client clientDB = clientService.getClientByUsernameAndEmail(client.getUsername(), client.getEmail());
-        if(null == clientDB){
+        if(clientDB == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(clientDB);
-    }
-
-
-    @PostMapping("/card")
-    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, BindingResult result){
-        if(result.hasErrors()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Message.formatMessage(result));
-        }
-        Card cardDB = cardService.createCard(card);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cardDB);
     }
 }

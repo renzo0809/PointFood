@@ -4,6 +4,7 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.DishExtra;
 import com.example.model.Order;
 import com.example.model.OrderDetail;
+import com.example.model.State;
 import com.example.repository.*;
 import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,14 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private DishExtraRepository dishExtraRepository;
 
+    @Autowired
+    private StateRepository stateRepository;
+
     @Transactional
     @Override
     public Order createOrder(Order order) {
 
-        order.getState().setName("Pendiente");
+        order.setState(stateRepository.getOne((long) 1));
         orderRepository.save(order);
         for (OrderDetail od : order.getDishes()){
             od.setOrder(order);
@@ -50,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
         CalculateSubTotalDishExtra(order.getDishes());
         CalculateSubTotalOrderDetail(order.getDishes());
         CalculateTotalOrder(order);
+
         return orderRepository.save(order);
     }
 
@@ -76,33 +81,33 @@ public class OrderServiceImpl implements OrderService {
         order.setTotal(order.getDishes().stream().mapToDouble(x -> x.getSubTotal()).sum());
     }
 
-    @Transactional
-    @Override
-    public Order updateOrderState(Long id, String order) {
-        Order orderDB = orderRepository.getOne(id);
-        if(orderDB == null){
-            throw new ResourceNotFoundException("There is no order with Id " + id);
-        }
-        orderDB.getState().setName(order);
-
-        return orderRepository.save(orderDB);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
     @Transactional(readOnly = true)
     @Override
     public Order getOrderById(Long id) {
         return orderRepository.findOrderById(id);
     }
 
+    @Transactional
+    @Override
+    public Order updateOrderState(Long id) {
+        Order orderDB = orderRepository.getOne(id);
+        if(orderDB == null){
+            throw new ResourceNotFoundException("There is no order with Id " + id);
+        }
+        orderDB.setState(stateRepository.getOne((long) 2));
+
+        return orderRepository.save(orderDB);
+    }
+
     @Transactional(readOnly = true)
     @Override
-    public List<Order> getAllOrdersByState(String state) {
-        return orderRepository.findAllByState(state);
+    public List<Order> getOrdersByRestaurantAndState(Long restaurantId, Long stateId) {
+        return orderRepository.findOrdersByRestaurantAndState(restaurantId, stateId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Order> getOrdersByRestaurant(Long id) {
+        return orderRepository.findOrdersByRestaurant(id);
     }
 }

@@ -32,13 +32,12 @@ public class RestaurantOwner implements Serializable {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @NotNull(message = "El DNI no puede ser vacío")
-    @Size(min=8,max=8)
-    @Column(name = "dni", unique = true,length = 8, nullable = false)
-    private String dni;
+    @NotNull(message = "El número de celular no puede ser vacío")
+    @Column(name = "phone", length = 9, nullable = false)
+    private String phone;
 
     @NotNull(message = "El email no puede ser vacío")
-    @Column(name = "email",length = 30, nullable = false)
+    @Column(name = "email", length = 30, nullable = false)
     private String email;
 
     @NotNull(message = "El nombre de usuario no puede ser vacío")

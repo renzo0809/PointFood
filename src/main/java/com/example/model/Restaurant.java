@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,24 +32,22 @@ public class Restaurant implements Serializable {
     @Column(name = "address", length = 50, nullable = false)
     private String address;
 
+    @NotNull(message = "El número de celular no puede ser vacío")
+    @Column(name = "phone", length = 9, nullable = false)
+    private String phone;
+
     @JoinColumn(name="restaurant_owner_id")
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private RestaurantOwner restaurantOwner;
 
-    @NotNull(message = "El numero de celular no puede ser vacío")
-    @Column(name = "phone", length = 9, nullable = false)
-    private String phone;
-
-    @Valid
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name="restaurant_id")
+    @JsonIgnore
     private List<Dish> dishes;
 
-    @Valid
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name="restaurant_id")
+    @JsonIgnore
     private List<Extra> extras;
 }

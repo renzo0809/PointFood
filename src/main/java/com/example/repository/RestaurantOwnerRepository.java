@@ -11,5 +11,9 @@ public interface RestaurantOwnerRepository extends JpaRepository<RestaurantOwner
 
     @Query("SELECT ro FROM RestaurantOwner ro WHERE ro.username=?1 and ro.password=?2")
     RestaurantOwner findRestaurantOwnerByUsernameAndPassword(String username, String password);
+
+    @Query("SELECT ro FROM RestaurantOwner ro WHERE ro.username=?1 and ro.email=?2")
     RestaurantOwner findRestaurantOwnerByUsernameAndEmail(String username, String email);
+
+    RestaurantOwner findRestaurantOwnerById(Long id);
 }

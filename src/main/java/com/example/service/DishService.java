@@ -1,13 +1,15 @@
 package com.example.service;
 
 import com.example.model.Dish;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface DishService {
 
     Dish createDish(Dish dish);
-    List<Dish> getDishByRestaurantId(Long id);
+    Dish getDishById(Long id);
     Dish updateDish(Long id, Dish dish);
-    List<Dish> getAllDishes();
+    ResponseEntity<?> deleteDish(Long id);
+    List<Dish> getDishesByRestaurant(Long id);
 }

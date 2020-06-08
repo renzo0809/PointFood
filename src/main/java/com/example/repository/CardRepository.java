@@ -15,5 +15,5 @@ CardRepository extends JpaRepository<Card, Long> {
     Card findCardById(Long id);
 
     @Query("SELECT ca FROM Card ca WHERE ca.client.id=?1")
-    List<Card> findCardByClient(Long id);
+    List<Card> findCardsByClient(Long id);
 }
