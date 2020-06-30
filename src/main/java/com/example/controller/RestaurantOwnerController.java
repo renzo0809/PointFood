@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import com.example.model.Client;
+import com.example.model.Restaurant;
 import com.example.model.RestaurantOwner;
 import com.example.service.RestaurantOwnerService;
 import com.example.util.Message;
@@ -87,5 +88,15 @@ public class RestaurantOwnerController {
         }
 
         return ResponseEntity.ok(restaurantOwnerDB);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RestaurantOwner>>listRestaurantOwners(){
+        List<RestaurantOwner> restaurantOwners = restaurantOwnerService.getRestaurantOwners();
+        if (restaurantOwners.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(restaurantOwners);
     }
 }

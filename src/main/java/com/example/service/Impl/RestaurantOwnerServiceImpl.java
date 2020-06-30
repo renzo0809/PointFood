@@ -70,4 +70,10 @@ public class RestaurantOwnerServiceImpl implements RestaurantOwnerService {
     public RestaurantOwner getRestaurantOwnerByUsernameAndEmail(String username, String email) {
         return restaurantOwnerRepository.findRestaurantOwnerByUsernameAndEmail(username, email);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<RestaurantOwner> getRestaurantOwners() {
+        return restaurantOwnerRepository.findAll();
+    }
 }

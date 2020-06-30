@@ -2,6 +2,7 @@ package com.example.service.Impl;
 
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.Client;
+import com.example.model.Restaurant;
 import com.example.repository.ClientRepository;
 import com.example.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,12 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getClientByUsernameAndEmail(String username, String email) {
         return clientRepository.findClientByUsernameAndEmail(username, email);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Client> getClients()
+    {
+        return clientRepository.findAll();
     }
 }

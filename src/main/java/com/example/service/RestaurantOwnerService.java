@@ -15,4 +15,6 @@ public interface RestaurantOwnerService {
     ResponseEntity<?> deleteRestaurantOwner(Long id);
     RestaurantOwner getRestaurantOwnerByUsernameAndPassword(String username, String password);
     RestaurantOwner getRestaurantOwnerByUsernameAndEmail(String username, String email);
+
+    List<RestaurantOwner> getRestaurantOwners();
 }

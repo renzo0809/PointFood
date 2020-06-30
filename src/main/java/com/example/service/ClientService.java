@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.Client;
+import com.example.model.Restaurant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,8 @@ public interface ClientService {
     Client getClientById(Long id);
     Client updateClient(Long id, Client client);
     ResponseEntity<?> deleteClient(Long id);
+    List<Client> getClients();
+
     Client getClientByUsernameAndPassword(String username, String password);
     Client getClientByUsernameAndEmail(String username, String email);
 }

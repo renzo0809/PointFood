@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.model.Card;
 import com.example.model.Client;
+import com.example.model.Restaurant;
 import com.example.service.CardService;
 import com.example.service.ClientService;
 import com.example.util.Message;
@@ -86,5 +87,13 @@ public class ClientController {
         return ResponseEntity.ok(clientDB);
     }
 
- 
+    @GetMapping
+    public ResponseEntity<List<Client>>listClients(){
+        List<Client> clients = clientService.getClients();
+        if (clients.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(clients);
+    }
 }
